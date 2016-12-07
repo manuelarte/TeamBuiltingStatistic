@@ -1,0 +1,8 @@
+info:
+  name: teambuiltingstatistic
+  description: Team Builting Statistics
+
+
+spring:
+  rabbitmq:
+    url: amqp://uzoukkav:xN719DwSB64TPZ5dbclQ12LJ0o7lZ2tU@spotted-monkey.rmq.cloudamqp.com/uzoukkav
