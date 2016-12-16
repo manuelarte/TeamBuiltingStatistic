@@ -1,5 +1,6 @@
 package org.manuel.teambuilting.statistic;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 07/12/2016.
  */
 @SpringBootApplication
+@EnableRabbit
 public class TeamBuiltingStatisticApplication {
 
 

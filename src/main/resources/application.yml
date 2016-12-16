@@ -2,7 +2,34 @@ info:
   name: teambuiltingstatistic
   description: Team Builting Statistics
 
+server:
+  port: ${PORT:8081}
 
 spring:
   rabbitmq:
     url: amqp://uzoukkav:xN719DwSB64TPZ5dbclQ12LJ0o7lZ2tU@spotted-monkey.rmq.cloudamqp.com/uzoukkav
+
+
+---
+
+# Queue configuration
+messaging:
+  event.amqp:
+    exchange: teambuilting.ex
+    queue: team.queue
+    team-crud-routing-key: team.crud
+
+---
+
+spring:
+  profiles: development
+  data.mongodb:
+    database: teambuilting # Database name.
+    host: localhost # Mongo server host.
+    port: 27017 # Mongo server port.
+    repositories.enabled: true # Enable Mongo repositories.
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
