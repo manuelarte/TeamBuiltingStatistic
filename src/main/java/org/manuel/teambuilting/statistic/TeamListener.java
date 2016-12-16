@@ -19,7 +19,7 @@ public class TeamListener {
 		value = @Queue(durable = "false", value="${messaging.event.amqp.queue}"),
 		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
 		key = "${messaging.event.amqp.team-crud-routing-key}") )
-	public void listenerForMessageOnceTheRelationIsCreated(final Message message) {
+	public void teamVisited(final Message message) {
 		System.out.println("Message received");
 	}
 }
