@@ -18,6 +18,9 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 jar {
     baseName = 'teambuiltingstatistic'
@@ -38,15 +41,32 @@ dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-actuator-docs')
-    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa") {
+        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+    }
 
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-web-services')
 
     compile('javax.inject:javax.inject:1')
 
+    compile("ch.qos.logback:logback-core:${logbackVersion}")
+    compile("ch.qos.logback:logback-classic:${logbackVersion}")
+    compile("net.logstash.logback:logstash-logback-encoder:${logbackEncoderVersion}")
+
+    // Persistence
+    compile("mysql:mysql-connector-java:${mysqlConnectorVersion}")
+    compile("org.hibernate:hibernate-envers:${hibernateVersion}")
+    compile("org.hibernate:hibernate-core:${hibernateVersion}")
+    // Including also entitymanager, see http://goo.gl/MzWDlo, error happening running 'dev' profile.
+    compile("org.hibernate:hibernate-entitymanager:${hibernateVersion}")
+    compile("com.zaxxer:HikariCP:${hikariVersion}")
+    compile("org.liquibase:liquibase-core:${liquibaseVersion}")
+
     compileOnly('org.projectlombok:lombok')
 
+    testRuntime("org.hsqldb:hsqldb:${hsqldbVersion}")
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 

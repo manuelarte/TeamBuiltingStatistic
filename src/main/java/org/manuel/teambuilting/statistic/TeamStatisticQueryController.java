@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 20-12-2016
  */
 @RestController
-@RequestMapping("statistics")
-public class StatisticQueryController {
+@RequestMapping("statistics/team")
+public class TeamStatisticQueryController {
 
-	private final StatisticQueryService service;
+	private final TeamStatisticQueryService service;
 
 	@Inject
-	public StatisticQueryController(final StatisticQueryService service) {
+	public TeamStatisticQueryController(final TeamStatisticQueryService service) {
 		this.service = service;
 	}
 
-	@RequestMapping(value = "/myTeamsMostVisited", method = RequestMethod.GET)
+	@RequestMapping(value = "/myMostVisited", method = RequestMethod.GET)
 	public Object myTeamsMostVisited() {
 		return null;
 	}
 
-	@RequestMapping(value = "/teamsMostVisited", method = RequestMethod.GET)
+	@RequestMapping(value = "/mostVisited", method = RequestMethod.GET)
 	public Object teamsMostVisited() {
 		return null;
 	}

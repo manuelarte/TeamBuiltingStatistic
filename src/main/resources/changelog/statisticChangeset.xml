@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+	logicalFilePath="db/changelog/statisticChangeset.xml"
+	objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+	<changeSet id="1" author="manuel.doncel.martos">
+		<comment>Creating the team statistic table</comment>
+
+		<createTable tableName="team">
+			<column name="id" type="BIGINT" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="team_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet id="2" author="manuel.doncel.martos">
+		<comment>Create Hibernate Envers table which will contain revision information</comment>
+
+		<createTable tableName="revinfo">
+			<column name="rev" type="INT" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="revtstmp" type="BIGINT" defaultValue="null" />
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet id="3" author="manuel.doncel.martos">
+		<comment>Create Hibernate Envers table which will contain revision changes</comment>
+
+		<createTable tableName="revchanges">
+			<column name="rev" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_revchanges_revinfo"
+							 referencedTableName="revinfo" referencedColumnNames="REV" />
+			</column>
+			<column name="entityname" type="VARCHAR(255)" defaultValue="null" />
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet id="4" author="manuel.doncel.martos">
+		<comment>Create Hibernate Envers audit table for the tenant table</comment>
+
+		<createTable tableName="team_aud">
+			<column name="id" type="INT">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="rev" type="INT">
+				<constraints nullable="false" foreignKeyName="fk_team_aud_revinfo"
+							 referencedTableName="revinfo" referencedColumnNames="REV"
+							 primaryKey="true" />
+			</column>
+			<column name="revtype" type="TINYINT" defaultValue="null" />
+			<column name="team_id" type="BIGINT" defaultValue="null" />
+			<column name="team_id_mod" type="BIGINT" defaultValue="null" />
+			<column name="name" type="VARCHAR(255)"	defaultValue="null" />
+			<column name="name_mod" type="VARCHAR(255)"	defaultValue="null" />
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+</databaseChangeLog>
