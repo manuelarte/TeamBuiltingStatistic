@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistic;
+package org.manuel.teambuilting.statistic.team;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
