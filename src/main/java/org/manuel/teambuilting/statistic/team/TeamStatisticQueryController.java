@@ -1,7 +1,11 @@
 package org.manuel.teambuilting.statistic.team;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefaults;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -27,7 +31,7 @@ public class TeamStatisticQueryController {
 	}
 
 	@RequestMapping(value = "/mostVisited", method = RequestMethod.GET)
-	public Object teamsMostVisited() {
-		return null;
+	public Page<TeamStatistic> teamsMostVisited( @PageableDefaults(value = 50, pageNumber = 0)  @RequestParam final Pageable pageable) {
+		return service.getTeamMostVisited(pageable);
 	}
 }
