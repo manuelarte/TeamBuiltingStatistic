@@ -1,7 +1,9 @@
 package org.manuel.teambuilting.statistic.team;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.inject.Inject;
 
@@ -19,7 +21,8 @@ public class TeamStatisticQueryService {
 		this.teamStatisticRepository = teamStatisticRepository;
 	}
 
-	public void get(final Pageable page) {
-		teamStatisticRepository.findAll(page);
+	public Page<TeamStatistic> getTeamMostVisited(final Pageable pageable) {
+		Assert.notNull(pageable);
+		return teamStatisticRepository.findAll(pageable);
 	}
 }
