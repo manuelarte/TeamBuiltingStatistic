@@ -1,9 +1,9 @@
-package org.manuel.teambuilting.statistic;
-
-import javax.inject.Inject;
+package org.manuel.teambuilting.statistic.team;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 
 /**
  * @author manuel.doncel.martos

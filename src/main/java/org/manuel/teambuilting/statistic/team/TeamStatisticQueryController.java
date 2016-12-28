@@ -1,10 +1,10 @@
-package org.manuel.teambuilting.statistic;
-
-import javax.inject.Inject;
+package org.manuel.teambuilting.statistic.team;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.inject.Inject;
 
 /**
  * @author manuel.doncel.martos

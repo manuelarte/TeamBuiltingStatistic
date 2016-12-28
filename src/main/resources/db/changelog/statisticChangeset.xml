@@ -17,7 +17,7 @@
 			<column name="team_id" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="name" type="VARCHAR(255)">
+			<column name="timesVisited" type="BIGINT">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -28,6 +28,29 @@
 	</changeSet>
 
 	<changeSet id="2" author="manuel.doncel.martos">
+		<comment>Last visit of the team table</comment>
+
+		<createTable tableName="team">
+			<column name="id" type="BIGINT" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="user_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="team_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="when" type="DATE">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet id="3" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision information</comment>
 
 		<createTable tableName="revinfo">
@@ -42,7 +65,7 @@
 		</modifySql>
 	</changeSet>
 
-	<changeSet id="3" author="manuel.doncel.martos">
+	<changeSet id="4" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision changes</comment>
 
 		<createTable tableName="revchanges">
@@ -58,7 +81,7 @@
 		</modifySql>
 	</changeSet>
 
-	<changeSet id="4" author="manuel.doncel.martos">
+	<changeSet id="5" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers audit table for the tenant table</comment>
 
 		<createTable tableName="team_aud">
@@ -73,8 +96,8 @@
 			<column name="revtype" type="TINYINT" defaultValue="null" />
 			<column name="team_id" type="BIGINT" defaultValue="null" />
 			<column name="team_id_mod" type="BIGINT" defaultValue="null" />
-			<column name="name" type="VARCHAR(255)"	defaultValue="null" />
-			<column name="name_mod" type="VARCHAR(255)"	defaultValue="null" />
+			<column name="timesVisited" type="VARCHAR(255)"	defaultValue="null" />
+			<column name="timesVisited_mod" type="VARCHAR(255)"	defaultValue="null" />
 		</createTable>
 
 		<modifySql dbms="mysql">

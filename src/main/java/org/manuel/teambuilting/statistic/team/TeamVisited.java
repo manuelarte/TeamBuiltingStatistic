@@ -1,16 +1,16 @@
-package org.manuel.teambuilting.statistic;
+package org.manuel.teambuilting.statistic.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.envers.Audited;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * @author manuel.doncel.martos
@@ -22,11 +22,18 @@ import lombok.NoArgsConstructor;
 @Audited
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamStatistic {
+public class TeamVisited {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 
+	@NotNull
+	private String userId;
+
+	@NotNull
 	private String teamId;
+
+	@NotNull
+	private Date when;
 }
