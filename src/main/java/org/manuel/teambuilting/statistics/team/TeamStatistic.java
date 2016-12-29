@@ -10,6 +10,7 @@ import org.manuel.teambuilting.statistics.StatisticObject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,7 @@ import javax.validation.constraints.NotNull;
 @Audited
 @AllArgsConstructor
 @NoArgsConstructor
+@Table
 public class TeamStatistic implements StatisticObject {
 
 	@Id

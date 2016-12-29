@@ -16,6 +16,6 @@ public interface TeamStatisticRepository extends PagingAndSortingRepository<Team
     TeamStatistic findByTeamId(String teamId);
 
     @Modifying
-    @Query("update team_statistic team set team.times_visited = team.times_visited + 1 where team.id = :id")
-    int updateTimesVisited(@Param("id") String teamId);
+    @Query("update TeamStatistic teamStatistic set teamStatistic.timesVisited = teamStatistic.timesVisited + 1 where teamStatistic.teamId = :teamId")
+    int updateTimesVisited(@Param("teamId") String teamId);
 }
