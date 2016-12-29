@@ -10,14 +10,14 @@
 	<changeSet id="1" author="manuel.doncel.martos">
 		<comment>Creating the team statistic table</comment>
 
-		<createTable tableName="team">
+		<createTable tableName="team_statistic">
 			<column name="id" type="BIGINT" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 			<column name="team_id" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="timesVisited" type="BIGINT">
+			<column name="times_visited" type="BIGINT">
 				<constraints nullable="false" />
 			</column>
 		</createTable>
@@ -30,7 +30,7 @@
 	<changeSet id="2" author="manuel.doncel.martos">
 		<comment>Last visit of the team table</comment>
 
-		<createTable tableName="teamLastVisits">
+		<createTable tableName="team_visited">
 			<column name="id" type="BIGINT" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -53,7 +53,7 @@
 	<changeSet id="3" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision information</comment>
 
-		<createTable tableName="revinfo">
+		<createTable tableName="team_statistic_revinfo">
 			<column name="rev" type="INT" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -68,10 +68,10 @@
 	<changeSet id="4" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision changes</comment>
 
-		<createTable tableName="revchanges">
+		<createTable tableName="team_statistic_revchanges">
 			<column name="rev" type="INT">
-				<constraints nullable="false" foreignKeyName="fk_revchanges_revinfo"
-							 referencedTableName="revinfo" referencedColumnNames="REV" />
+				<constraints nullable="false" foreignKeyName="fk_team_statistic_revchanges_revinfo"
+							 referencedTableName="team_statistic_revinfo" referencedColumnNames="REV" />
 			</column>
 			<column name="entityname" type="VARCHAR(255)" defaultValue="null" />
 		</createTable>
@@ -84,20 +84,20 @@
 	<changeSet id="5" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers audit table for the tenant table</comment>
 
-		<createTable tableName="team_aud">
+		<createTable tableName="team_statistic_aud">
 			<column name="id" type="INT">
 				<constraints nullable="false" primaryKey="true" />
 			</column>
 			<column name="rev" type="INT">
-				<constraints nullable="false" foreignKeyName="fk_team_aud_revinfo"
-							 referencedTableName="revinfo" referencedColumnNames="REV"
+				<constraints nullable="false" foreignKeyName="fk_team_statistic_aud_revinfo"
+							 referencedTableName="team_statistic_revinfo" referencedColumnNames="REV"
 							 primaryKey="true" />
 			</column>
 			<column name="revtype" type="TINYINT" defaultValue="null" />
 			<column name="team_id" type="BIGINT" defaultValue="null" />
 			<column name="team_id_mod" type="BIGINT" defaultValue="null" />
-			<column name="timesVisited" type="VARCHAR(255)"	defaultValue="null" />
-			<column name="timesVisited_mod" type="VARCHAR(255)"	defaultValue="null" />
+			<column name="times_visited" type="VARCHAR(255)"	defaultValue="null" />
+			<column name="times_visited_mod" type="VARCHAR(255)"	defaultValue="null" />
 		</createTable>
 
 		<modifySql dbms="mysql">
