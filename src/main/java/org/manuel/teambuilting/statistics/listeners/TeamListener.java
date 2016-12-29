@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistic.listeners;
+package org.manuel.teambuilting.statistics.listeners;
 
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;

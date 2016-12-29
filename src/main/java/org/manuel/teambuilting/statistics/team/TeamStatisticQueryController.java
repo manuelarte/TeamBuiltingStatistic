@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistic.team;
+package org.manuel.teambuilting.statistics.team;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

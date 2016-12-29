@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistic.config;
+package org.manuel.teambuilting.statistics.config;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;

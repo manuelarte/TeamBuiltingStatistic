@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistic;
+package org.manuel.teambuilting.statistics;
 
 /**
  * @author manuel.doncel.martos

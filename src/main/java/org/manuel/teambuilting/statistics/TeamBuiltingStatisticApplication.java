@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistic;
+package org.manuel.teambuilting.statistics;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
