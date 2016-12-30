@@ -23,7 +23,12 @@ public class TeamStatisticCommandService {
 
 	@Transactional
 	public TeamStatistic updateTimesVisited(final String teamId) {
-		teamStatisticRepository.updateTimesVisited(teamId);
+		final TeamStatistic teamStatistic = teamStatisticRepository.findByTeamId(teamId);
+		if (teamStatistic == null) {
+			teamStatisticRepository.save(new TeamStatistic(null, teamId, 1));
+		} else {
+			teamStatisticRepository.updateTimesVisited(teamId);
+		}
 		return teamStatisticRepository.findByTeamId(teamId);
 	}
 

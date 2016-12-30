@@ -53,7 +53,7 @@
 	<changeSet id="3" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision information</comment>
 
-		<createTable tableName="team_statistic_revinfo">
+		<createTable tableName="revinfo">
 			<column name="rev" type="INT" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>
@@ -68,10 +68,10 @@
 	<changeSet id="4" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision changes</comment>
 
-		<createTable tableName="team_statistic_revchanges">
+		<createTable tableName="revchanges">
 			<column name="rev" type="INT">
-				<constraints nullable="false" foreignKeyName="fk_team_statistic_revchanges_revinfo"
-							 referencedTableName="team_statistic_revinfo" referencedColumnNames="REV" />
+				<constraints nullable="false" foreignKeyName="fk_revinfo"
+							 referencedTableName="revinfo" referencedColumnNames="REV" />
 			</column>
 			<column name="entityname" type="VARCHAR(255)" defaultValue="null" />
 		</createTable>
@@ -89,15 +89,15 @@
 				<constraints nullable="false" primaryKey="true" />
 			</column>
 			<column name="rev" type="INT">
-				<constraints nullable="false" foreignKeyName="fk_team_statistic_aud_revinfo"
-							 referencedTableName="team_statistic_revinfo" referencedColumnNames="REV"
+				<constraints nullable="false" foreignKeyName="fk_aud_revinfo"
+							 referencedTableName="revinfo" referencedColumnNames="REV"
 							 primaryKey="true" />
 			</column>
 			<column name="revtype" type="TINYINT" defaultValue="null" />
-			<column name="team_id" type="BIGINT" defaultValue="null" />
-			<column name="team_id_mod" type="BIGINT" defaultValue="null" />
-			<column name="times_visited" type="VARCHAR(255)"	defaultValue="null" />
-			<column name="times_visited_mod" type="VARCHAR(255)"	defaultValue="null" />
+			<column name="team_id" type="VARCHAR(255)" defaultValue="null" />
+			<column name="team_id_mod" type="VARCHAR(255)" defaultValue="null" />
+			<column name="times_visited" type="BIGINT" defaultValue="null" />
+			<column name="times_visited_mod" type="BIGINT" defaultValue="null" />
 		</createTable>
 
 		<modifySql dbms="mysql">

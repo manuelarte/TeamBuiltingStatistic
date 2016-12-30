@@ -1,5 +1,6 @@
 package org.manuel.teambuilting.statistics.player;
 
+import org.manuel.teambuilting.statistics.team.TeamStatistic;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -23,7 +24,12 @@ public class PlayerStatisticCommandService {
 
 	@Transactional
 	public PlayerStatistic updateTimesVisited(final String playerId) {
-		playerStatisticRepository.updateTimesVisited(playerId);
+		final PlayerStatistic playerStatistic = playerStatisticRepository.findByPlayerId(playerId);
+		if (playerStatistic == null) {
+			playerStatisticRepository.save(new PlayerStatistic(null, playerId, 1));
+		} else {
+			playerStatisticRepository.updateTimesVisited(playerId);
+		}
 		return playerStatisticRepository.findByPlayerId(playerId);
 	}
 
