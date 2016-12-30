@@ -30,7 +30,7 @@
 	<changeSet id="2" author="manuel.doncel.martos">
 		<comment>Last visit of the team table</comment>
 
-		<createTable tableName="team_visited">
+		<createTable tableName="team_visits">
 			<column name="id" type="BIGINT" autoIncrement="true">
 				<constraints primaryKey="true" nullable="false" />
 			</column>

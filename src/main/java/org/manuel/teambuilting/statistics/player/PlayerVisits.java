@@ -1,10 +1,11 @@
-package org.manuel.teambuilting.statistics.team;
+package org.manuel.teambuilting.statistics.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
+import org.manuel.teambuilting.statistics.VisitsObject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import java.util.Date;
 @Audited
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamVisited {
+public class PlayerVisits implements VisitsObject {
 
 	@Id
 	@GeneratedValue
@@ -32,7 +33,7 @@ public class TeamVisited {
 	private String userId;
 
 	@NotNull
-	private String teamId;
+	private String playerId;
 
 	@NotNull
 	private Date when;

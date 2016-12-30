@@ -4,24 +4,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
 /**
  * @author Manuel Doncel Martos
- * @since 07/12/2016.
+ * @since 30/12/2016.
  */
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize
-public class TeamChangedMessage {
+public class Player {
 
     @NotNull
-    private final Team team;
+    private String id;
 
-    @NotNull
-    private final String changeType;
 }

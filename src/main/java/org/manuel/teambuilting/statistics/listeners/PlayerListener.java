@@ -1,8 +1,8 @@
 package org.manuel.teambuilting.statistics.listeners;
 
-import org.manuel.teambuilting.statistics.messages.TeamEventMessage;
-import org.manuel.teambuilting.statistics.team.TeamStatisticCommandService;
-import org.manuel.teambuilting.statistics.team.TeamVisits;
+import org.manuel.teambuilting.statistics.messages.PlayerEventMessage;
+import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
+import org.manuel.teambuilting.statistics.player.PlayerVisits;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -18,24 +18,24 @@ import javax.inject.Inject;
  * @since 16-12-2016
  */
 @Configuration
-public class TeamListener {
+public class PlayerListener {
 
-	private final TeamStatisticCommandService teamStatisticCommandService;
+	private final PlayerStatisticCommandService playerStatisticCommandService;
 
 	@Inject
-	public TeamListener(final TeamStatisticCommandService teamStatisticCommandService) {
-		this.teamStatisticCommandService = teamStatisticCommandService;
+	public PlayerListener(final PlayerStatisticCommandService playerStatisticCommandService) {
+		this.playerStatisticCommandService = playerStatisticCommandService;
 	}
 
 	@RabbitListener(bindings = @QueueBinding(
 		value = @Queue(durable = "false", value="${messaging.event.amqp.queue}"),
 		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
 		key = "${messaging.event.amqp.team-crud-routing-key}") )
-	public void teamVisited(final @Payload TeamEventMessage message) {
-		teamStatisticCommandService.updateTimesVisited(message.getTeam().getId());
+	public void playerVisited(final @Payload PlayerEventMessage message) {
+		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
 		if (message.getUser() != null) {
-			final TeamVisits teamVisits = new TeamVisits(null, message.getUser().getUser_id(), message.getTeam().getId(), message.getDate());
-			teamStatisticCommandService.updateTeamVisited(teamVisits);
+			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUser().getUser_id(), message.getPlayer().getId(), message.getDate());
+			playerStatisticCommandService.updateTeamVisited(playerVisits);
 		}
 	}
 }

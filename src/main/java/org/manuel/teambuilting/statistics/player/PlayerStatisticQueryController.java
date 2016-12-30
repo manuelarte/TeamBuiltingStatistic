@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistics.team;
+package org.manuel.teambuilting.statistics.player;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,19 +15,19 @@ import javax.inject.Inject;
  * @since 20-12-2016
  */
 @RestController
-@RequestMapping("teams")
-public class TeamStatisticQueryController {
+@RequestMapping("players")
+public class PlayerStatisticQueryController {
 
-	private final TeamStatisticQueryService service;
+	private final PlayerStatisticQueryService service;
 
 	@Inject
-	public TeamStatisticQueryController(final TeamStatisticQueryService service) {
+	public PlayerStatisticQueryController(final PlayerStatisticQueryService service) {
 		this.service = service;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public Page<TeamStatistic> teamsMostVisited(@PageableDefault(page = 0, size = 3, sort={"timesVisited"}, direction = Sort.Direction.DESC) final Pageable pageable) {
+	public Page<PlayerStatistic> playersMostVisited(@PageableDefault(page = 0, size = 3, sort={"timesVisited"}, direction = Sort.Direction.DESC) final Pageable pageable) {
 
-		return service.getTeamMostVisited(pageable);
+		return service.getPlayerMostVisited(pageable);
 	}
 }
