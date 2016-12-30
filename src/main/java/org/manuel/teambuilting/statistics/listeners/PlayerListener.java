@@ -33,8 +33,8 @@ public class PlayerListener {
 		key = "${messaging.event.amqp.team-crud-routing-key}") )
 	public void playerVisited(final @Payload PlayerEventMessage message) {
 		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
-		if (message.getUser() != null) {
-			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUser().getUser_id(), message.getPlayer().getId(), message.getDate());
+		if (message.getUser_id() != null) {
+			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUser_id(), message.getPlayer().getId(), message.getDate());
 			playerStatisticCommandService.updateTeamVisited(playerVisits);
 		}
 	}

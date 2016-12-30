@@ -23,7 +23,7 @@ public class PlayerEventMessage {
     @NotNull
     private final Player player;
 
-    private final User user;
+    private final String user_id;
 
     @NotNull
     private final String eventType;

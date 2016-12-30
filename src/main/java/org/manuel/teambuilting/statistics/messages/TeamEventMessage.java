@@ -23,7 +23,7 @@ public class TeamEventMessage {
     @NotNull
     private final Team team;
 
-    private final User user;
+    private final String user_id;
 
     @NotNull
     private final String eventType;
