@@ -48,6 +48,7 @@ messaging:
     exchange: teambuilting.ex
     queue: team.queue
     team-crud-routing-key: team.crud
+    player-crud-routing-key: player.crud
 
 ---
 
