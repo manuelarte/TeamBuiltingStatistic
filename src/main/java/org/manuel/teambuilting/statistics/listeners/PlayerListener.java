@@ -1,13 +1,11 @@
 package org.manuel.teambuilting.statistics.listeners;
 
+import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.statistics.messages.PlayerEventMessage;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
 import org.manuel.teambuilting.statistics.player.PlayerVisits;
 import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.Payload;
 
@@ -17,6 +15,10 @@ import javax.inject.Inject;
  * @author manuel.doncel.martos
  * @since 16-12-2016
  */
+@RabbitListener(bindings = @QueueBinding(
+		value = @Queue(durable = "true", value = "${messaging.event.amqp.queue}"),
+		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
+		key = "player.#"))
 @Configuration
 public class PlayerListener {
 
@@ -27,15 +29,17 @@ public class PlayerListener {
 		this.playerStatisticCommandService = playerStatisticCommandService;
 	}
 
-	@RabbitListener(bindings = @QueueBinding(
-		value = @Queue(durable = "false", value="${messaging.event.amqp.queue}"),
-		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
-		key = "${messaging.event.amqp.player-crud-routing-key}") )
-	public void playerVisited(final @Payload PlayerEventMessage message) {
+	public void playerVisited(@Payload final PlayerEventMessage message) {
 		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
 		if (message.getUser_id() != null) {
 			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUser_id(), message.getPlayer().getId(), message.getDate());
 			playerStatisticCommandService.updateTeamVisited(playerVisits);
 		}
+	}
+
+	@RabbitHandler
+	public void handle(final PlayerDeletedMessage message) {
+		System.out.println(message);
+		// apply subscriber to event patter, and delete all the player statistics
 	}
 }
