@@ -30,7 +30,7 @@ public class TeamListener {
 	@RabbitListener(bindings = @QueueBinding(
 		value = @Queue(durable = "false", value="${messaging.event.amqp.queue}"),
 		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
-		key = "${messaging.event.amqp.team-crud-routing-key}") )
+		key = "${messaging.event.amqp.team-event-routing-key}") )
 	public void teamVisited(final @Payload TeamEventMessage message) {
 		teamStatisticCommandService.updateTimesVisited(message.getTeam().getId());
 		if (message.getUser_id() != null) {
