@@ -3,7 +3,9 @@ package org.manuel.teambuilting.statistics.listeners;
 import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.statistics.messages.PlayerEventMessage;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
+import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
 import org.manuel.teambuilting.statistics.player.PlayerVisits;
+import org.manuel.teambuilting.statistics.player.PlayerVisitsRepository;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +25,14 @@ import javax.inject.Inject;
 public class PlayerListener {
 
 	private final PlayerStatisticCommandService playerStatisticCommandService;
+	private final PlayerStatisticRepository playerStatisticRepository;
+	private final PlayerVisitsRepository playerVisitsRepository;
 
 	@Inject
-	public PlayerListener(final PlayerStatisticCommandService playerStatisticCommandService) {
+	public PlayerListener(final PlayerStatisticCommandService playerStatisticCommandService, final PlayerStatisticRepository playerStatisticRepository, final PlayerVisitsRepository playerVisitsRepository) {
 		this.playerStatisticCommandService = playerStatisticCommandService;
+		this.playerStatisticRepository = playerStatisticRepository;
+		this.playerVisitsRepository = playerVisitsRepository;
 	}
 
 	public void playerVisited(@Payload final PlayerEventMessage message) {
@@ -39,7 +45,7 @@ public class PlayerListener {
 
 	@RabbitHandler
 	public void handle(final PlayerDeletedMessage message) {
-		System.out.println(message);
-		// apply subscriber to event patter, and delete all the player statistics
+		playerStatisticRepository.delete(playerStatisticRepository.findByPlayerId(message.getPlayer().getId()));
+		playerVisitsRepository.delete(playerVisitsRepository.findByPlayerId(message.getPlayer().getId()));
 	}
 }

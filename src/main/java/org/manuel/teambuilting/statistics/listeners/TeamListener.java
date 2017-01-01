@@ -28,7 +28,7 @@ public class TeamListener {
 	}
 
 	@RabbitListener(bindings = @QueueBinding(
-		value = @Queue(durable = "false", value="${messaging.event.amqp.queue}"),
+		value = @Queue(durable = "true", value="${messaging.event.amqp.queue}"),
 		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
 		key = "${messaging.event.amqp.team-event-routing-key}") )
 	public void teamVisited(final @Payload TeamEventMessage message) {

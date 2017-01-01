@@ -1,5 +1,6 @@
 package org.manuel.teambuilting.statistics.player;
 
+import org.manuel.teambuilting.statistics.PlayerIdDependent;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Repository;
  * @since 27-12-2016
  */
 @Repository
-public interface PlayerStatisticRepository extends PagingAndSortingRepository<PlayerStatistic, Long> {
-
-    PlayerStatistic findByPlayerId(String playerId);
+public interface PlayerStatisticRepository extends PlayerIdDependent<PlayerStatistic>, PagingAndSortingRepository<PlayerStatistic, Long> {
 
     @Modifying
     @Query("update PlayerStatistic playerStatistic set playerStatistic.timesVisited = playerStatistic.timesVisited + 1 where playerStatistic.playerId = :playerId")

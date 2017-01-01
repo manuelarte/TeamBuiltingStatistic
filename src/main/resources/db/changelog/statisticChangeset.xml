@@ -51,6 +51,49 @@
 	</changeSet>
 
 	<changeSet id="3" author="manuel.doncel.martos">
+		<comment>Creating the player statistic table</comment>
+
+		<createTable tableName="player_statistic">
+			<column name="id" type="BIGINT" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="player_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="times_visited" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet id="4" author="manuel.doncel.martos">
+		<comment>Last visit of the team table</comment>
+
+		<createTable tableName="player_visits">
+			<column name="id" type="BIGINT" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="user_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="player_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="when" type="DATE">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<modifySql dbms="mysql">
+			<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE=utf8_unicode_ci" />
+		</modifySql>
+	</changeSet>
+
+	<changeSet id="5" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision information</comment>
 
 		<createTable tableName="revinfo">
@@ -65,7 +108,7 @@
 		</modifySql>
 	</changeSet>
 
-	<changeSet id="4" author="manuel.doncel.martos">
+	<changeSet id="6" author="manuel.doncel.martos">
 		<comment>Create Hibernate Envers table which will contain revision changes</comment>
 
 		<createTable tableName="revchanges">
@@ -81,8 +124,8 @@
 		</modifySql>
 	</changeSet>
 
-	<changeSet id="5" author="manuel.doncel.martos">
-		<comment>Create Hibernate Envers audit table for the tenant table</comment>
+	<changeSet id="7" author="manuel.doncel.martos">
+		<comment>Create Hibernate Envers audit table for the team_statistic table</comment>
 
 		<createTable tableName="team_statistic_aud">
 			<column name="id" type="INT">
