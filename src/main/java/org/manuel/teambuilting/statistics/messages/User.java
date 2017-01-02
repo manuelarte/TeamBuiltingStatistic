@@ -20,5 +20,5 @@ import lombok.NoArgsConstructor;
 @JsonDeserialize
 public class User {
 
-    private String user_id;
+    private String userId;
 }

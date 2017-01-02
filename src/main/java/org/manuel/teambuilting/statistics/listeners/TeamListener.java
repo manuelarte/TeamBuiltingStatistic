@@ -33,8 +33,8 @@ public class TeamListener {
 		key = "${messaging.event.amqp.team-event-routing-key}") )
 	public void teamVisited(final @Payload TeamEventMessage message) {
 		teamStatisticCommandService.updateTimesVisited(message.getTeam().getId());
-		if (message.getUser_id() != null) {
-			final TeamVisits teamVisits = new TeamVisits(null, message.getUser_id(), message.getTeam().getId(), message.getDate());
+		if (message.getUserId() != null) {
+			final TeamVisits teamVisits = new TeamVisits(null, message.getUserId(), message.getTeam().getId(), message.getDate());
 			teamStatisticCommandService.updateTeamVisited(teamVisits);
 		}
 	}

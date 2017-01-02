@@ -37,8 +37,8 @@ public class PlayerListener {
 
 	public void playerVisited(@Payload final PlayerEventMessage message) {
 		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
-		if (message.getUser_id() != null) {
-			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUser_id(), message.getPlayer().getId(), message.getDate());
+		if (message.getUserId() != null) {
+			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUserId(), message.getPlayer().getId(), message.getDate());
 			playerStatisticCommandService.updateTeamVisited(playerVisits);
 		}
 	}

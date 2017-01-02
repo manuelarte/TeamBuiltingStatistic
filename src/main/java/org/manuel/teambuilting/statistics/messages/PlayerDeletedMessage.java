@@ -3,11 +3,13 @@ package org.manuel.teambuilting.statistics.messages;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
+import java.util.Date;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * Event Message to show that a player was deleted
@@ -26,7 +28,7 @@ public class PlayerDeletedMessage {
     private final Player player;
 
     @NotNull
-    private final String user_id;
+    private final String userId;
 
     @NotNull
     private final Date date;
