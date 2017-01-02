@@ -36,8 +36,6 @@ spring:
     deserialization:
       accept-float-as-int: false
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
-  rabbitmq:
-    url: amqp://uzoukkav:xN719DwSB64TPZ5dbclQ12LJ0o7lZ2tU@spotted-monkey.rmq.cloudamqp.com/uzoukkav
 
 
 ---
@@ -57,6 +55,20 @@ liquibase:
   enabled: true
   change-log: classpath:/db/changelog/statisticChangeset.xml
   contexts: default
+
+---
+
+spring:
+  profiles: production
+  datasource:
+      url: jdbc:mysql://localhost:3306/statisticdb?createDatabaseIfNotExist=true
+      username: root
+      password: root
+  rabbitmq:
+      username: uzoukkav
+      virtual-host: uzoukkav
+      password: xN719DwSB64TPZ5dbclQ12LJ0o7lZ2tU
+      host: spotted-monkey.rmq.cloudamqp.com
 
 ---
 
