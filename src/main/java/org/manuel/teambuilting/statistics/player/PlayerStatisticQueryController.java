@@ -1,5 +1,7 @@
 package org.manuel.teambuilting.statistics.player;
 
+import javax.inject.Inject;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -8,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-
 /**
  * @author manuel.doncel.martos
  * @since 20-12-2016
  */
 @RestController
-@RequestMapping("players")
+@RequestMapping("/statistics/players")
 public class PlayerStatisticQueryController {
 
 	private final PlayerStatisticQueryService service;
