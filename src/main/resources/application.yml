@@ -61,7 +61,7 @@ liquibase:
 spring:
   profiles: production
   datasource:
-      url: jdbc:${CLEARDB_DATABASE_URL}?createDatabaseIfNotExist=true
+      url: jdbc:${CLEARDB_DATABASE_URL}
       username: ${MYSQL_USERNAME}
       password: ${MYSQL_PASSWORD}
   rabbitmq:
