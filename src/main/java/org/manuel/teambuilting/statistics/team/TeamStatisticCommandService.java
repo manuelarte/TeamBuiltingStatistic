@@ -1,9 +1,9 @@
 package org.manuel.teambuilting.statistics.team;
 
-import org.springframework.stereotype.Service;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
 
 /**
  * @author manuel.doncel.martos
@@ -30,6 +30,11 @@ public class TeamStatisticCommandService {
 			teamStatisticRepository.updateTimesVisited(teamId);
 		}
 		return teamStatisticRepository.findByTeamId(teamId);
+	}
+
+	public void deleteTimesVisited(final String teamId) {
+		teamStatisticRepository.delete(teamStatisticRepository.findByTeamId(teamId));
+		teamVisitsRepository.delete(teamVisitsRepository.findByTeamId(teamId));
 	}
 
 	public void updateTeamVisited(final TeamVisits teamVisits) {
