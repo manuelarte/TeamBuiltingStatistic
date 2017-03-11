@@ -4,12 +4,10 @@ import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
 import org.manuel.teambuilting.statistics.messages.PlayerEventMessage;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
-import org.manuel.teambuilting.statistics.player.PlayerVisits;
 import org.manuel.teambuilting.statistics.player.PlayerVisitsRepository;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.handler.annotation.Payload;
 
 import javax.inject.Inject;
 
@@ -18,9 +16,9 @@ import javax.inject.Inject;
  * @since 16-12-2016
  */
 @RabbitListener(bindings = @QueueBinding(
-		value = @Queue(durable = "true", value = "${messaging.event.amqp.queue}"),
-		exchange = @Exchange(durable = "true", value = "${messaging.event.amqp.exchange}", type = ExchangeTypes.TOPIC),
-		key = "player.#"))
+		value = @Queue(durable = "true", value = "${messaging.amqp.player.queue.name}"),
+		exchange = @Exchange(durable = "true", value = "${messaging.amqp.player.exchange.name}", type = ExchangeTypes.TOPIC),
+		key = "${messaging.amqp.player.queue.binding}"))
 @Configuration
 public class PlayerListener {
 
@@ -33,14 +31,6 @@ public class PlayerListener {
 		this.playerStatisticCommandService = playerStatisticCommandService;
 		this.playerStatisticRepository = playerStatisticRepository;
 		this.playerVisitsRepository = playerVisitsRepository;
-	}
-
-	public void playerVisited(@Payload final PlayerEventMessage message) {
-		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
-		if (message.getUserId() != null) {
-			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUserId(), message.getPlayer().getId(), message.getDate());
-			playerStatisticCommandService.updateTeamVisited(playerVisits);
-		}
 	}
 
 	@RabbitHandler
