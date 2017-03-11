@@ -12,7 +12,7 @@ import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * @author manuel.doncel.martos
@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 	value = @Queue(durable = "true", value = "${messaging.amqp.team.queue.name}"),
 	exchange = @Exchange(durable = "true", value = "${messaging.amqp.team.exchange.name}", type = ExchangeTypes.TOPIC),
 	key = "${messaging.amqp.team.queue.binding}"))
-@Configuration
+@Component
 public class TeamListener {
 
 	private final TeamStatisticCommandService teamStatisticCommandService;

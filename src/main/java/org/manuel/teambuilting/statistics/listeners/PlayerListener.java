@@ -1,15 +1,18 @@
 package org.manuel.teambuilting.statistics.listeners;
 
+import javax.inject.Inject;
+
 import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
-import org.manuel.teambuilting.statistics.messages.PlayerEventMessage;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
 import org.manuel.teambuilting.statistics.player.PlayerVisitsRepository;
 import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.*;
-import org.springframework.context.annotation.Configuration;
-
-import javax.inject.Inject;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @author manuel.doncel.martos
@@ -19,7 +22,7 @@ import javax.inject.Inject;
 		value = @Queue(durable = "true", value = "${messaging.amqp.player.queue.name}"),
 		exchange = @Exchange(durable = "true", value = "${messaging.amqp.player.exchange.name}", type = ExchangeTypes.TOPIC),
 		key = "${messaging.amqp.player.queue.binding}"))
-@Configuration
+@Component
 public class PlayerListener {
 
 	private final PlayerStatisticCommandService playerStatisticCommandService;
