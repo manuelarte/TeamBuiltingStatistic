@@ -26,7 +26,7 @@ public class TeamStatisticQueryController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public Page<TeamStatistic> teamsMostVisited(@PageableDefault(page = 0, size = 3, sort={"timesVisited"}, direction = Sort.Direction.DESC) final Pageable pageable) {
+	public Page<TeamStatistic> teamsMostVisited(@PageableDefault(page = 0, size = 20, sort={"timesVisited"}, direction = Sort.Direction.DESC) final Pageable pageable) {
 
 		return service.getTeamMostVisited(pageable);
 	}

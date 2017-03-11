@@ -33,6 +33,11 @@ public class TeamListener {
 	}
 
 	@RabbitHandler
+	public void teamDeleted(final TeamDeletedMessage message) {
+		teamStatisticCommandService.deleteTimesVisited(message.getTeam().getId());
+	}
+
+	@RabbitHandler
 	public void teamVisited(final TeamVisitedMessage message) {
 		teamStatisticCommandService.updateTimesVisited(message.getTeam().getId());
 		if (message.getUserId() != null) {
@@ -41,9 +46,4 @@ public class TeamListener {
 		}
 	}
 
-	@RabbitHandler
-	public void teamDeleted(final TeamDeletedMessage message) {
-		teamStatisticCommandService.deleteTimesVisited(message.getTeam().getId());
-
-	}
 }

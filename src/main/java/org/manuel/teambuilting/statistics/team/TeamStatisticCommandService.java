@@ -1,8 +1,11 @@
 package org.manuel.teambuilting.statistics.team;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.manuel.teambuilting.statistics.StatisticService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @since 20-12-2016
  */
 @Service
-public class TeamStatisticCommandService {
+public class TeamStatisticCommandService implements StatisticService<TeamStatistic> {
 
 	private final TeamStatisticRepository teamStatisticRepository;
 	private final TeamVisitsRepository teamVisitsRepository;
@@ -21,10 +24,11 @@ public class TeamStatisticCommandService {
 		this.teamVisitsRepository = teamVisitsRepository;
 	}
 
+	@Override
 	@Transactional
 	public TeamStatistic updateTimesVisited(final String teamId) {
-		final TeamStatistic teamStatistic = teamStatisticRepository.findByTeamId(teamId);
-		if (teamStatistic == null) {
+		final Optional<TeamStatistic> teamStatistic = Optional.ofNullable(teamStatisticRepository.findByTeamId(teamId));
+		if (!teamStatistic.isPresent()) {
 			teamStatisticRepository.save(new TeamStatistic(null, teamId, 1));
 		} else {
 			teamStatisticRepository.updateTimesVisited(teamId);
