@@ -3,8 +3,10 @@ package org.manuel.teambuilting.statistics.listeners;
 import javax.inject.Inject;
 
 import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
+import org.manuel.teambuilting.statistics.messages.PlayerVisitedMessage;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
+import org.manuel.teambuilting.statistics.player.PlayerVisits;
 import org.manuel.teambuilting.statistics.player.PlayerVisitsRepository;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -40,5 +42,14 @@ public class PlayerListener {
 	public void handle(final PlayerDeletedMessage message) {
 		playerStatisticRepository.delete(playerStatisticRepository.findByPlayerId(message.getPlayer().getId()));
 		playerVisitsRepository.delete(playerVisitsRepository.findByPlayerId(message.getPlayer().getId()));
+	}
+
+	@RabbitHandler
+	public void handle(final PlayerVisitedMessage message) {
+		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
+		if (message.getUserId() != null) {
+			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUserId(), message.getPlayer().getId(), message.getDate());
+			playerStatisticCommandService.updatePlayerVisited(playerVisits);
+		}
 	}
 }

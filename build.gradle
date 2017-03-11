@@ -35,6 +35,18 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
+facets {
+    integrationTest {
+        parentSourceSet = 'main'
+        testTaskName = 'integrationTest'
+        includeInCheckLifecycle = false
+    }
+}
+
+integrationTest {
+    outputs.dir snippetsDir
+}
+
 dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-amqp")
@@ -65,8 +77,11 @@ dependencies {
 
     compileOnly('org.projectlombok:lombok')
 
-    testRuntime("org.hsqldb:hsqldb:${hsqldbVersion}")
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
+    integrationTestCompile 'org.springframework.amqp:spring-rabbit-test:1.6.6.RELEASE'
+    integrationTestRuntime("org.hsqldb:hsqldb:${hsqldbVersion}")
 }
 
 
