@@ -27,21 +27,16 @@ ext {
 group 'org.manuel.teambuilting'
 version '0.1.0-SNAPSHOT'
 
-
-apply plugin: 'java'
+apply plugin: 'build-announcements'
+apply plugin: 'build-dashboard'
 apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'maven-publish'
-
-gradleLint {
-    alwaysRun = false
-    criticalRules += 'archaic-wrapper'
-    criticalRules += 'unused-dependency'
-    org.gradle.model.Rules += 'duplicate-dependency-class'
-    org.gradle.model.Rules += 'unused-exclude-by-dep'
-}
+apply plugin: 'org.sonarqube'
+apply plugin: 'project-report'
+apply plugin: 'ru.d10xa.allure'
 
 jar {
     baseName = "${microserviceName}"
@@ -93,7 +88,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-actuator-docs')
     compile("org.springframework.boot:spring-boot-starter-web")
     compile('org.springframework.boot:spring-boot-starter-web-services')
-    compile('org.springframework.data:spring-data-rest-hal-browser')
     compile("org.springframework.boot:spring-boot-starter-data-jpa") {
         exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
     }
