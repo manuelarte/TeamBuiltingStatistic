@@ -44,7 +44,7 @@ gradleLint {
 }
 
 jar {
-    baseName = 'teambuiltingstatistics'
+    baseName = "${microserviceName}"
     version = project.version
 }
 
