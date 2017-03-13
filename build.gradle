@@ -1,19 +1,32 @@
-group 'org.manuel.teambuilting'
-version '0.1.0-SNAPSHOT'
-
 buildscript {
-    ext {
-        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
-    }
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "ru.d10xa:gradle-allure-plugin:0.5.5"
     }
 }
+
+plugins {
+    id 'com.github.ben-manes.versions' version '0.13.0'
+    id 'nebula.contacts' version '3.0.1'
+    id 'nebula.facet' version '3.3.0'
+    id 'nebula.lint' version '6.3.0'
+    id 'org.sonarqube' version '2.2.1'
+    id 'org.springframework.boot' version '1.4.3.RELEASE'
+}
+
+ext {
+    javaVersion = '1.8'
+    snippetsDir = file('build/generated-snippets')
+}
+
+group 'org.manuel.teambuilting'
+version '0.1.0-SNAPSHOT'
+
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -22,17 +35,17 @@ apply plugin: "io.spring.dependency-management"
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
-jar {
-    baseName = 'teambuiltingstatistics'
-    version = '0.1.0-SNAPSHOT'
+gradleLint {
+    alwaysRun = false
+    criticalRules += 'archaic-wrapper'
+    criticalRules += 'unused-dependency'
+    org.gradle.model.Rules += 'duplicate-dependency-class'
+    org.gradle.model.Rules += 'unused-exclude-by-dep'
 }
 
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
+jar {
+    baseName = 'teambuiltingstatistics'
+    version = project.version
 }
 
 facets {
@@ -43,8 +56,33 @@ facets {
     }
 }
 
+allure {
+    clean = false
+    allureReportDir = "$buildDir/reports/allure"
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
 integrationTest {
     outputs.dir snippetsDir
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    agent
+    all {
+        exclude group: 'org.apache.geronimo.specs', module: 'geronimo-jta_1.1_spec'
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven { url 'https://repo.spring.io/milestone' }
+    mavenCentral()
 }
 
 dependencies {
@@ -84,6 +122,31 @@ dependencies {
     integrationTestRuntime("org.hsqldb:hsqldb:${hsqldbVersion}")
 }
 
+bootRun {
+    systemProperties 'user.timezone': 'UTC'
+
+    if (project.hasProperty('jvmArgs')) {
+        jvmArgs = (project.jvmArgs.split('\\s+') as java.util.List)
+    }
+}
+
+clean {
+    delete 'log'
+    delete 'bin'
+}
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm', 'pfd'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}
 
 task stage {
     dependsOn build
