@@ -1,5 +1,7 @@
 package org.manuel.teambuilting.statistics.listeners;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import org.manuel.teambuilting.statistics.messages.TeamDeletedMessage;
@@ -40,9 +42,10 @@ public class TeamListener {
 	@RabbitHandler
 	public void teamVisited(final TeamVisitedMessage message) {
 		teamStatisticCommandService.updateTimesVisited(message.getTeam().getId());
-		if (message.getUserId() != null) {
-			final TeamVisits teamVisits = new TeamVisits(null, message.getUserId(), message.getTeam().getId(), message.getDate());
-			teamStatisticCommandService.updateTeamVisited(teamVisits);
+		if (Optional.ofNullable(message.getUserId()).isPresent()) {
+			final TeamVisits teamVisits = TeamVisits.builder().userId(message.getUserId()).
+				teamId(message.getTeam().getId()).when(message.getDate()).build();
+			teamStatisticCommandService.save(teamVisits);
 		}
 	}
 

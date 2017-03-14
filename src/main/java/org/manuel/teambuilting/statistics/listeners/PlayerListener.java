@@ -1,5 +1,7 @@
 package org.manuel.teambuilting.statistics.listeners;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 
 import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
@@ -47,8 +49,9 @@ public class PlayerListener {
 	@RabbitHandler
 	public void handle(final PlayerVisitedMessage message) {
 		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
-		if (message.getUserId() != null) {
-			final PlayerVisits playerVisits = new PlayerVisits(null, message.getUserId(), message.getPlayer().getId(), message.getDate());
+		if (Optional.ofNullable(message.getUserId()).isPresent()) {
+			final PlayerVisits playerVisits = PlayerVisits.builder().userId(message.getUserId())
+				.playerId(message.getPlayer().getId()).when(message.getDate()).build();
 			playerStatisticCommandService.updatePlayerVisited(playerVisits);
 		}
 	}

@@ -1,17 +1,22 @@
 package org.manuel.teambuilting.statistics.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.envers.Audited;
-import org.manuel.teambuilting.statistics.VisitsObject;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import javax.validation.constraints.Past;
+
+import org.hibernate.envers.Audited;
+import org.manuel.teambuilting.statistics.VisitsObject;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author manuel.doncel.martos
@@ -23,6 +28,7 @@ import java.util.Date;
 @Audited
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TeamVisits implements VisitsObject {
 
 	@Id
@@ -36,5 +42,6 @@ public class TeamVisits implements VisitsObject {
 	private String teamId;
 
 	@NotNull
+	@Past
 	private Date when;
 }

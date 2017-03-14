@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.manuel.teambuilting.statistics.StatisticService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 /**
  * @author manuel.doncel.martos
@@ -27,9 +28,11 @@ public class TeamStatisticCommandService implements StatisticService<TeamStatist
 	@Override
 	@Transactional
 	public TeamStatistic updateTimesVisited(final String teamId) {
+		Assert.hasLength(teamId);
 		final Optional<TeamStatistic> teamStatistic = Optional.ofNullable(teamStatisticRepository.findByTeamId(teamId));
 		if (!teamStatistic.isPresent()) {
-			teamStatisticRepository.save(new TeamStatistic(null, teamId, 1));
+			final TeamStatistic statistic = TeamStatistic.builder().teamId(teamId).timesVisited(1).build();
+			teamStatisticRepository.save(statistic);
 		} else {
 			teamStatisticRepository.updateTimesVisited(teamId);
 		}
@@ -41,7 +44,8 @@ public class TeamStatisticCommandService implements StatisticService<TeamStatist
 		teamVisitsRepository.delete(teamVisitsRepository.findByTeamId(teamId));
 	}
 
-	public void updateTeamVisited(final TeamVisits teamVisits) {
+	public void save(final TeamVisits teamVisits) {
 		teamVisitsRepository.save(teamVisits);
 	}
+
 }

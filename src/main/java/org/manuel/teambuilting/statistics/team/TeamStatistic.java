@@ -1,11 +1,6 @@
 package org.manuel.teambuilting.statistics.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.envers.Audited;
-import org.manuel.teambuilting.statistics.StatisticObject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.envers.Audited;
+import org.manuel.teambuilting.statistics.StatisticObject;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author manuel.doncel.martos
@@ -22,9 +25,10 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @Audited
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Builder
 public class TeamStatistic implements StatisticObject {
 
 	@Id
