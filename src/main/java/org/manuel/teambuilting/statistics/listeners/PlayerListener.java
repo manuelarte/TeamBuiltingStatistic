@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.statistics.messages.PlayerDeletedMessage;
-import org.manuel.teambuilting.statistics.messages.PlayerVisitedMessage;
+import org.manuel.teambuilting.messages.PlayerDeletedMessage;
+import org.manuel.teambuilting.messages.PlayerVisitedMessage;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
 import org.manuel.teambuilting.statistics.player.PlayerVisits;

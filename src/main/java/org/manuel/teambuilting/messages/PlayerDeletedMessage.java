@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistics.messages;
+package org.manuel.teambuilting.messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,23 +10,27 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.manuel.teambuilting.dtos.Player;
 
 /**
+ * Event Message to show that a player was deleted
+ *
  * @author Manuel Doncel Martos
  * @since 07/12/2016.
  */
-@Data
-@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize
-public class PlayerVisitedMessage {
+@Data
+@AllArgsConstructor
+public class PlayerDeletedMessage {
 
     @NotNull
     private final Player player;
 
+    @NotNull
     private final String userId;
 
     @NotNull
-    private Date date;
+    private final Date date;
 }

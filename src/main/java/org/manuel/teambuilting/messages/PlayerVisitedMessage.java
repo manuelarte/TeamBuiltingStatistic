@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistics.messages;
+package org.manuel.teambuilting.messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,20 +10,21 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.manuel.teambuilting.dtos.Player;
 
 /**
  * @author Manuel Doncel Martos
- * @since 11/01/2017.
+ * @since 07/12/2016.
  */
 @Data
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize
-public class TeamDeletedMessage {
+public class PlayerVisitedMessage {
 
     @NotNull
-    private final Team team;
+    private final Player player;
 
     private final String userId;
 

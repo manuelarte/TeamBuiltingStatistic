@@ -1,4 +1,4 @@
-package org.manuel.teambuilting.statistics.messages;
+package org.manuel.teambuilting.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author Manuel Doncel Martos
- * @since 30/12/2016.
+ * @since 29/12/2016.
  */
 @Data
 @Builder
@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize
-public class Player {
+public class Team {
 
     @NotNull
     private String id;

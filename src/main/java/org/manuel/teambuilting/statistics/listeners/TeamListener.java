@@ -1,20 +1,15 @@
 package org.manuel.teambuilting.statistics.listeners;
 
-import java.util.Optional;
-
-import javax.inject.Inject;
-
-import org.manuel.teambuilting.statistics.messages.TeamDeletedMessage;
-import org.manuel.teambuilting.statistics.messages.TeamVisitedMessage;
+import org.manuel.teambuilting.messages.TeamDeletedMessage;
+import org.manuel.teambuilting.messages.TeamVisitedMessage;
 import org.manuel.teambuilting.statistics.team.TeamStatisticCommandService;
 import org.manuel.teambuilting.statistics.team.TeamVisits;
 import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
+import java.util.Optional;
 
 /**
  * @author manuel.doncel.martos

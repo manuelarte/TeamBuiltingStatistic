@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.manuel.teambuilting.statistics.messages.Player;
+import org.manuel.teambuilting.dtos.Player;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
 import org.manuel.teambuilting.statistics.player.PlayerVisitsRepository;
 import org.springframework.amqp.rabbit.test.RabbitListenerTest;

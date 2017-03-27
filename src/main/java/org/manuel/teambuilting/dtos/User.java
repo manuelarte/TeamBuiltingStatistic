@@ -1,32 +1,24 @@
-package org.manuel.teambuilting.statistics.messages;
+package org.manuel.teambuilting.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * @author Manuel Doncel Martos
- * @since 07/12/2016.
+ * @author Manuel on 30/12/2016.
  */
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown=true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonDeserialize
-public class TeamVisitedMessage {
+public class User {
 
-    @NotNull
-    private final Team team;
-
-    private final String userId;
-
-    @NotNull
-    private Date date;
+    private String userId;
 }
