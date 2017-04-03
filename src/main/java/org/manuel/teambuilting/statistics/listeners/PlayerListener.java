@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.manuel.teambuilting.messages.PlayerDeletedMessage;
-import org.manuel.teambuilting.messages.PlayerVisitedMessage;
+import org.manuel.teambuilting.messages.PlayerDeletedEvent;
+import org.manuel.teambuilting.messages.PlayerVisitedEvent;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticCommandService;
 import org.manuel.teambuilting.statistics.player.PlayerStatisticRepository;
 import org.manuel.teambuilting.statistics.player.PlayerVisits;
@@ -23,9 +23,11 @@ import org.springframework.stereotype.Component;
  * @since 16-12-2016
  */
 @RabbitListener(bindings = @QueueBinding(
-		value = @Queue(durable = "true", value = "${messaging.amqp.player.queue.name}"),
-		exchange = @Exchange(durable = "true", value = "${messaging.amqp.player.exchange.name}", type = ExchangeTypes.TOPIC),
-		key = "${messaging.amqp.player.queue.binding}"))
+	value = @Queue(value = "${messaging.amqp.player.queue.name}",
+		durable = "${messaging.amqp.player.queue.durable}", autoDelete = "${messaging.amqp.player.queue.autodelete}"),
+	exchange = @Exchange(value = "${messaging.amqp.player.exchange.name}", type = ExchangeTypes.TOPIC,
+		durable = "${messaging.amqp.player.exchange.durable}", autoDelete = "${messaging.amqp.player.exchange.autodelete}"),
+	key = "${messaging.amqp.player.queue.binding}"))
 @Component
 public class PlayerListener {
 
@@ -41,17 +43,17 @@ public class PlayerListener {
 	}
 
 	@RabbitHandler
-	public void handle(final PlayerDeletedMessage message) {
-		playerStatisticRepository.delete(playerStatisticRepository.findByPlayerId(message.getPlayer().getId()));
-		playerVisitsRepository.delete(playerVisitsRepository.findByPlayerId(message.getPlayer().getId()));
+	public void handle(final PlayerDeletedEvent event) {
+		playerStatisticRepository.delete(playerStatisticRepository.findByPlayerId(event.getPlayerId()));
+		playerVisitsRepository.delete(playerVisitsRepository.findByPlayerId(event.getPlayerId()));
 	}
 
 	@RabbitHandler
-	public void handle(final PlayerVisitedMessage message) {
-		playerStatisticCommandService.updateTimesVisited(message.getPlayer().getId());
-		if (Optional.ofNullable(message.getUserId()).isPresent()) {
-			final PlayerVisits playerVisits = PlayerVisits.builder().userId(message.getUserId())
-				.playerId(message.getPlayer().getId()).when(message.getDate()).build();
+	public void handle(final PlayerVisitedEvent event) {
+		playerStatisticCommandService.updateTimesVisited(event.getPlayerId());
+		if (Optional.ofNullable(event.getUserId()).isPresent()) {
+			final PlayerVisits playerVisits = PlayerVisits.builder().userId(event.getUserId())
+				.playerId(event.getPlayerId()).when(event.getDate()).build();
 			playerStatisticCommandService.updatePlayerVisited(playerVisits);
 		}
 	}

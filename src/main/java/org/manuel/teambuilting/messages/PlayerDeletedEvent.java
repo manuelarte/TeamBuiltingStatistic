@@ -1,16 +1,14 @@
 package org.manuel.teambuilting.messages;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.manuel.teambuilting.dtos.Player;
 
 /**
  * Event Message to show that a player was deleted
@@ -18,19 +16,24 @@ import org.manuel.teambuilting.dtos.Player;
  * @author Manuel Doncel Martos
  * @since 07/12/2016.
  */
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonDeserialize
 @Data
 @AllArgsConstructor
-public class PlayerDeletedMessage {
+@Builder
+public class PlayerDeletedEvent {
+
+    public static final String ROUTING_KEY = "player.deleted";
 
     @NotNull
-    private final Player player;
+    private final String playerId;
 
     @NotNull
     private final String userId;
 
     @NotNull
     private final Date date;
+
+    @JsonIgnore
+    public String getRoutingKey() {
+        return ROUTING_KEY;
+    }
 }

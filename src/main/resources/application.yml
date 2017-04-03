@@ -41,23 +41,28 @@ spring:
 ---
 
 # Queue configuration
-# Queue configuration
 messaging:
   amqp:
     team:
       exchange:
-        name: teambuilting.ex.team
+        name: TEAMBUILTING.E.TEAM
         durable: true
+        autodelete: false
       queue:
-        name: teambuilting.q.team
+        name: TEAMBUILTING.Q.STATISTIC.TEAM
         binding: team.#
+        durable: true
+        autodelete: false
     player:
       exchange:
-        name: teambuilting.ex.player
+        name: TEAMBUILTING.E.PLAYER
         durable: true
+        autodelete: false
       queue:
-        name: teambuilting.q.player
+        name: TEAMBUILTING.Q.STATISTIC.PLAYER
         binding: player.#
+        durable: true
+        autodelete: false
 
 ---
 
