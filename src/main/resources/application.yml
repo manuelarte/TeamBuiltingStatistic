@@ -18,18 +18,11 @@ spring:
       org.hibernate.envers.track_entities_changed_in_revision: true
   datasource:
     initialize: false
-    url: jdbc:mysql://mysql:3306/statisticdb?createDatabaseIfNotExist=true
+    url: jdbc:h2:mem:testDB;MODE=Mysql;DATABASE_TO_UPPER=false
     username: root
     password:
     hikari:
-      minimumIdle: 20
-      maximumPoolSize: 30
-      idleTimeout: 10000
-      driverClassName: com.mysql.jdbc.Driver
-      data-source-properties:
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
+      driverClassName: org.h2.Driver
   jackson:
     serialization:
       write-dates-with-zone-id: false
@@ -75,10 +68,6 @@ liquibase:
 
 spring:
   profiles: production
-  datasource:
-      url: ${MYSQL_URL}
-      username: ${MYSQL_USERNAME}
-      password: ${MYSQL_PASSWORD}
   rabbitmq:
       username: ${RABBITMQ_USERNAME}
       virtual-host: ${RABBITMQ_VIRTUAL_HOST}
@@ -89,10 +78,6 @@ spring:
 
 spring:
   profiles: development
-  datasource:
-    url: jdbc:mysql://localhost:3306/statisticdb?createDatabaseIfNotExist=true
-    username: root
-    password: root
   rabbitmq:
     username: guest
     password: guest
